@@ -81,5 +81,3 @@
                  (dissoc temp-id)
                  (assoc permanent-id (assoc (by-id temp-id) :db/id permanent-id)))))))
 
-(defmethod sync :todo/delete!
-  [query-term result env state-atom])
