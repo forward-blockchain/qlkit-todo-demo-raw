@@ -36,7 +36,7 @@
                                          (ql/update-state!* this assoc :new-todo (.-value (.-target e))))}]
                  (when (seq todos)
                    [:ol (for [todo todos]
-                          (ql/create-element TodoItem todo))])])))
+                          (ql/create-instance TodoItem todo))])])))
 
 (defn remote-handler [query callback]
   (go (let [{:keys [status body] :as result} (<! (http/post "endpoint" {:edn-params query}))]
