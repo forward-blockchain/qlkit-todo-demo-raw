@@ -1,6 +1,6 @@
 (ns qlkit-todo.core
   (:require-macros [cljs.core.async.macros :refer [go]])
-  (:require [qlkit.core :as ql :refer-macros [defcomponent-raw]]
+  (:require [qlkit.core :as ql :refer-macros [defcomponent*]]
             [goog.dom :as gdom]
             [qlkit-todo.parsers :as pa]
             [cljs-http.client :as http]
@@ -11,16 +11,16 @@
 
 (defonce app-state (atom {}))
 
-(defcomponent-raw TodoItem
+(defcomponent* TodoItem
   (query [[:todo/text] [:db/id]])
   (render [this {:keys [:todo/text] :as atts} state]
           (html [:li 
                  text
                  [:button {:on-click (fn []
-                                       (ql/transact-raw! this [:todo/delete!]))}
+                                       (ql/transact!* this [:todo/delete!]))}
                   "X"]])))
 
-(defcomponent-raw TodoList
+(defcomponent* TodoList
   (query [[:qlkit-todo/todos (ql/get-query TodoItem)]])
   (render [this {:keys [:qlkit-todo/todos] :as atts} {:keys [new-todo] :as state}]
           (html [:div {}
@@ -29,11 +29,11 @@
                           :placeholder "What needs to be done?"
                           :on-key-down (fn [e]
                                          (when (= (.-keyCode e) 13)
-                                           (ql/transact-raw! this [:todo/new! {:db/id     (random-uuid)
+                                           (ql/transact!* this [:todo/new! {:db/id     (random-uuid)
                                                                            :todo/text new-todo}])
-                                           (ql/update-state-raw! this dissoc :new-todo)))
+                                           (ql/update-state!* this dissoc :new-todo)))
                           :on-change   (fn [e]
-                                         (ql/update-state-raw! this assoc :new-todo (.-value (.-target e))))}]
+                                         (ql/update-state!* this assoc :new-todo (.-value (.-target e))))}]
                  (when (seq todos)
                    [:ol (for [todo todos]
                           (ql/create-element TodoItem todo))])])))
