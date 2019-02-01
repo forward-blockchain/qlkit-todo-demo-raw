@@ -12,3 +12,6 @@ pom.xml
 .repl
 .nrepl-port
 checkouts
+target
+.cpcache/
+.rebel_readline_history

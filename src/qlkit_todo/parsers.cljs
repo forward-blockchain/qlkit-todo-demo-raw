@@ -34,24 +34,24 @@
 (defmulti remote (fn [qterm & _] (first qterm)))
 
 (defmethod remote :todo/new!
-  [query-term state]
+  [query-term env state]
   query-term)
 
 (defmethod remote :todo/delete!
-  [query-term state]
+  [query-term env state]
   query-term)
 
 (defmethod remote :todo/text
-  [query-term state]
+  [query-term env state]
   query-term)
 
 (defmethod remote :db/id
-  [query-term state]
+  [query-term env state]
   query-term)
 
 (defmethod remote :qlkit-todo/todos
-  [query-term state]
-  (ql/parse-children-remote query-term)) 
+  [query-term env state]
+  (ql/parse-children-remote query-term env)) 
 
 (defmulti sync (fn [qterm & _] (first qterm)))
 
