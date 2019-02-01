@@ -8,7 +8,7 @@ Please read the [recommended qlkit introductory article](https://medium.com/p/79
 
 To get an interactive development environment run:
 
-   clojure -m figwheel.main -b dev -r
+    clojure -m figwheel.main -b dev -r
 
 and open your browser at [localhost:9500](http://localhost:9500/).
 This will auto compile and send all changes to the browser without the
